@@ -9,11 +9,12 @@ const game = () => {
     'How are you?',
     'This is my App'
   ];
-  const checkTexts = [];
+  let checkTexts = [];
 
   createText();
 
   function createText() {
+    console.log("createText確認");
     
     // 乱数の作成
     const rnd = Math.floor(Math.random() * textList.length);
@@ -42,7 +43,7 @@ const game = () => {
   document.addEventListener('keydown', keyDown);
   // 入力されたキーはeに格納される
   function keyDown(e) {
-    console.log("keyDown内");
+    console.log("keyDown確認");
     // console.log(e.key);
     // if(e.key === checkTexts[0]) {
     if(e.key === checkTexts[0].textContent) {

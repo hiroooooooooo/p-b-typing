@@ -1,11 +1,21 @@
-<%# <div class="main"> %>
-  <%# <div id="target">karu</div> %>
-  <p id="text"></p>
+<p id="text"></p>
 
 <%= link_to new_user_registration_path do %>
   <button class="btn">新規登録</button>
 <% end %>
-  <%# <h1 id="test">TEST</h1> %>
-  <%# <input id="input"> %>
 
-<%# </div> %>
+<% if current_user.present? %>
+  <p><%= "#{current_user.name}さん、こんにちは" %></p>
+<% else %>
+  <p><%= "サイトにおこしいただき、ありがとうございます" %></p>
+<% end %>
+
+<% if current_user.present? %>
+  <%= link_to destroy_user_session_path, method: :delete do %>
+    <button class="btn">ログアウト</button>
+  <% end %>
+<% else %>
+  <%= link_to new_user_session_path do %>
+    <button class="btn">ログイン</button>
+  <% end %>
+<% end %>
