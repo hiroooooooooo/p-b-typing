@@ -5,8 +5,18 @@ class User < ApplicationRecord
          :recoverable, :rememberable
         #  [memo]:validatableを削除
 
-  # 正規表現は後ほど
-  validates :name, presence: true, uniqueness: true
-  # [memo]パスワードに対してバリデーションを追加してあげる
-  validates :password, presence: true
+  # [memo]ベース部分を残す
+  # with_options presence: true do
+  #   validates :name, uniqueness: true
+  #   # [memo]パスワードに対して手動でバリデーションを追加してあげる
+  #   # [memo]数字のみの正規表現
+  #   validates :password, format: { with: /\A\d+\z/ }
+  # end
+
+  with_options presence: { message: 'を入力してください' } do
+    validates :name, uniqueness: { message: 'がすでに存在しています。別の名前を入力してください' }
+    # [memo]パスワードに対して手動でバリデーションを追加してあげる
+    # [memo]数字のみの正規表現
+    validates :password, format: { with: /\A\d+\z/, message: 'は数字で入力してください' }
+  end
 end
