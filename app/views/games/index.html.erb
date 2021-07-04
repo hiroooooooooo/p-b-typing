@@ -1,4 +1,4 @@
-<p id="text"></p>
+<h1>P-B-Typing</h1>
 
 <%= link_to new_user_registration_path do %>
   <button class="btn">新規登録</button>
@@ -19,3 +19,16 @@
     <button class="btn">ログイン</button>
   <% end %>
 <% end %>
+
+<div>
+  <p>このアプリについて</p>
+  <ul>
+    <li>タイピングの練習がおこなえます</li>
+    <li>名前とパスワードだけで登録できます</li>
+    <li>当サイトはすべて無料でご利用いただけます</li>
+  </ul>
+  <p>まずはこちらをどうぞ</p>
+  <%= link_to game_path(current_user.id) do %>
+    <button class="btn">おためしプレイ</button>
+  <% end %>
+</div>
