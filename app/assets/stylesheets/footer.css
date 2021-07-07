@@ -1,0 +1,20 @@
+body {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  width: 50vw;
+  margin: 0 auto;
+  text-align: center;
+  background: gray;
+}
+
+.cr {
+  color: white;
+}

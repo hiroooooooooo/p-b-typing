@@ -1,0 +1,30 @@
+<%= render "header" %>
+
+<main class="main-new">
+
+  <div class="text-ready" id="ready">
+    <p class="text-ready1">日本語入力モードをオフにしてください</p>
+    <p class="text-ready2">スペースキーで開始</p>
+    <p class="text-ready3">（終了はescキーです）</p>
+  </div>
+
+  <div class="text-start" id="start">
+    <p class="text-hiragana">ひらがな文がここに表示される</p>
+    <p id="text-abc"></p>
+  </div>
+
+  <div class="text-end" id="end">
+    <p class="text-end1">おつかれさまでした！</p>
+    <p class="text-end2">よくがんばりましたね♪</p>
+    <p class="text-end3">もう1度プレイしますか？</p>
+  </div>
+
+  <div class="sound">
+    <span class="text-sound">効果音</span>
+    <button class="btn-on">オン</button>
+    <button class="btn-off">オフ</button>
+  </div>
+
+</main>
+
+<%= render "footer" %>

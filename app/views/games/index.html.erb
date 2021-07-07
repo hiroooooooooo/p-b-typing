@@ -1,34 +1,44 @@
-<h1>P-B-Typing</h1>
+<%= render "header" %>
 
-<%= link_to new_user_registration_path do %>
-  <button class="btn">新規登録</button>
-<% end %>
+<main class="main-index">
 
-<% if current_user.present? %>
-  <p><%= "#{current_user.name}さん、こんにちは" %></p>
-<% else %>
-  <p><%= "サイトにおこしいただき、ありがとうございます" %></p>
-<% end %>
-
-<% if current_user.present? %>
-  <%= link_to destroy_user_session_path, method: :delete do %>
-    <button class="btn">ログアウト</button>
+  <% if current_user.present? %>
+    <p class="message"><%= "#{current_user.name}さん、こんにちは！" %></p>
+  <% else %>
+    <p class="message"><%= "ピービータイピングへようこそ！" %></p>
   <% end %>
-<% else %>
-  <%= link_to new_user_session_path do %>
-    <button class="btn">ログイン</button>
-  <% end %>
-<% end %>
 
-<div>
-  <p>このアプリについて</p>
-  <ul>
-    <li>タイピングの練習がおこなえます</li>
-    <li>名前とパスワードだけで登録できます</li>
-    <li>当サイトはすべて無料でご利用いただけます</li>
-  </ul>
-  <p>まずはこちらをどうぞ</p>
-  <%= link_to game_path(current_user.id) do %>
-    <button class="btn">おためしプレイ</button>
+  <div class="wrap">
+    <h2 class="description">このアプリについて</h2>
+    <ul class="list">
+      <li class="list-item">タイピングの練習が手軽に行えます</li>
+      <li class="list-item">名前とパスワードだけで新規登録できます</li>
+      <li class="list-item">当サイトはすべて無料でご利用いただけます</li>
+    </ul>
+  </div>
+
+  <div class="account">
+    <%= link_to new_user_registration_path do %>
+      <button class="btn-new">新規登録</button>
+    <% end %>
+
+    <% if current_user.present? %>
+      <%= link_to destroy_user_session_path, method: :delete do %>
+        <button class="btn-log">ログアウト</button>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path do %>
+        <button class="btn-log">ログイン</button>
+      <% end %>
+    <% end %>
+  </div>
+
+  <p class="text-dozo">まずはこちらをどうぞ</p>
+  <%= link_to new_game_path do %>
+    <button class="btn-otameshi">お試しプレイ</button>
   <% end %>
-</div>
+  
+</main>
+
+<%= render "footer" %>
+
