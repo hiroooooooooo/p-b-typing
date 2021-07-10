@@ -5,7 +5,22 @@
   position: relative;
 }
 
+#genre {
+  visibility: hidden;
+}
+
+#count-down {
+  visibility: hidden;
+  font-size: 8rem;
+  color: goldenrod;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
 .text-ready {
+  width: 50vw;
   /* visibility: visible; */
   /* margin-top: 10rem; */
   position: absolute;
@@ -28,6 +43,7 @@
 
 .text-start {
   visibility: hidden;
+  width: 50vw;
   position: absolute;
   top: 25%;
   left: 50%;
@@ -40,41 +56,101 @@
   /* color: #636363; */
 }
 
-.text-end {
+.text-result {
   visibility: hidden;
+  width: 50vw;
   position: absolute;
   top: 25%;
   left: 50%;
   transform: translate(-50%, 0);
 }
 
-.sound {
+.text-result1 {
+  font-size: 2rem;
+}
+
+.text-result2 {
+  font-size: 2.4rem;
+  /* color: goldenrod; */
+}
+
+.text-result3 {
+  font-size: 1.4rem;
+  margin-top: 3rem;
+}
+
+.replay {
+  visibility: hidden;
+  width: 50vw;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   position: absolute;
   top: 70%;
   left: 50%;
   transform: translate(-50%, 0);
 }
 
-.text-sound {
-  font-size: 1.4rem;
-  margin-right: 1rem;
+.replay-btn-y {
+  width: 24vw;
+  /* border: 1px solid #000; */
+  border: 2px solid goldenrod;
+  background: white;
+  /* margin-right: 0.5rem; */
+  padding: 10px 0;
 }
 
-.btn-on {
+.replay-btn-y:hover {
+  color: #fff;
+  /* background: gray; */
+  background: goldenrod;
+}
+
+.replay-btn-n {
+  width: 24vw;
+  border: 1px solid #000;
+  background: white;
+  /* margin-left: 0.5rem; */
+  padding: 10px 0;
+}
+
+.replay-btn-n:hover {
+  color: #fff;
+  background: gray;
+}
+
+.sound {
+  width: 50vw;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-evenly;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+/* .text-sound {
+  font-size: 1.4rem;
+  margin-right: 1rem;
+} */
+
+.sound-btn-on {
   width: 10vw;
+  width: 24vw;
   color: #fff;
   border: 1px solid #000;
   background: gray;
-  margin-right: 1rem;
+  /* margin-right: 0.6rem; */
+  padding: 10px 0;
 }
 
-.btn-off {
+.sound-btn-off {
   width: 10vw;
+  width: 24vw;
   border: 1px solid #000;
   background: #fff;
-  margin-right: 5rem;
+  /* margin-right: 5.2rem; */
+  /* margin-left: 0.6rem; */
+  padding: 10px 0;
 }
 

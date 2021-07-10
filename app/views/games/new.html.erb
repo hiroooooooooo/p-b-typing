@@ -1,6 +1,17 @@
 <%= render "header" %>
 
+<%# audio_tag("p0.mp3", id:"p") %>
+<%= audio_tag("p0.mp3", id:"p") %>
+<%= audio_tag("b0.mp3", id:"b") %>
+<%# audio_tag("b0", id:"b") %>
+<%# <audio src="p0.mp3" id="p"></audio> %>
+<%# <audio src="b0.mp3" id="b"></audio> %>
+
 <main class="main-new">
+
+  <p id="genre"><%= @genre %></p>
+
+  <p class="count-down" id="count-down">3</p>
 
   <div class="text-ready" id="ready">
     <p class="text-ready1">日本語入力モードをオフにしてください</p>
@@ -9,20 +20,29 @@
   </div>
 
   <div class="text-start" id="start">
-    <p class="text-hiragana">ひらがな文がここに表示される</p>
-    <p id="text-abc"></p>
+    <p class="text-hiragana" id="hiragana">ひらがな文がここに表示される</p>
+    <p id="target"></p>
   </div>
 
-  <div class="text-end" id="end">
-    <p class="text-end1">おつかれさまでした！</p>
-    <p class="text-end2">よくがんばりましたね♪</p>
-    <p class="text-end3">もう1度プレイしますか？</p>
+  <div class="text-result" id="result">
+    <p class="text-result1">おつかれさまでした！</p>
+    <p class="text-result2">よくがんばりましたね♪</p>
+    <p class="text-result3">もう1度プレイしますか？</p>
   </div>
 
-  <div class="sound">
-    <span class="text-sound">効果音</span>
-    <button class="btn-on">オン</button>
-    <button class="btn-off">オフ</button>
+  <div class="replay" id="replay">
+    <%= link_to new_game_path(genre: @genre) do %>
+      <button class="replay-btn-y">はい</button>
+    <% end %>
+    <%= link_to root_path do %>
+      <button class="replay-btn-n">いいえ</button>
+    <% end %>
+  </div>
+
+  <div class="sound" id="sound">
+    <%# <span class="text-sound">効果音</span> %>
+    <button class="sound-btn-on" id="on">♪オン</button>
+    <button class="sound-btn-off" id="off">♪オフ</button>
   </div>
 
 </main>
