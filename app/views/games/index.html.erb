@@ -1,5 +1,7 @@
 <%= render "header" %>
 
+
+
 <main class="main-index">
 
   <% if current_user.present? %>
@@ -34,10 +36,14 @@
   </div>
 
   <p class="text-dozo">まずはこちらをどうぞ</p>
-  <%= link_to new_game_path do %>
-    <button class="btn-otameshi">お試しプレイ</button>
+  <%# <div id="otameshi"> %>
+  <%#= link_to new_game_path do %>
+  <%= link_to new_game_path(genre: "otameshi") do %>
+  <%#= link_to(new_game_path, {id: "otameshi"}) do %>
+    <button class="btn-otameshi"  name="genre" value="otameshi">お試しプレイ</button>
   <% end %>
-  
+  <%# </div> %>
+
 </main>
 
 <%= render "footer" %>
