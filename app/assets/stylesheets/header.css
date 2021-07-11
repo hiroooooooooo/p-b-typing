@@ -3,8 +3,10 @@ header {
   width: 52vw;
   margin: 0 auto;
   background: gray;
+  /* background: black; */
   padding: 1rem 0 1rem 2rem;
   font-size: 5rem;
+  /* border: 1px solid #000; */
 }
 
 .head {
@@ -21,4 +23,5 @@ header {
 
 header span {
   color: goldenrod;
+  /* color: gold; */
 }

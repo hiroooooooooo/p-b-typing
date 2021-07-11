@@ -92,7 +92,7 @@ const game = () => {
     }
 
     // genre=otameshiの場合
-    if ( genre === "otameshi" ) {
+    if ( genre === "otameshi" || genre === "" ) {
 
       createTextOtameshi();
       
