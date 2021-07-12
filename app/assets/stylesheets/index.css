@@ -83,3 +83,26 @@
   color: #fff;
   background: goldenrod;
 }
+
+.contents {
+  width: 52vw;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.contents-btn {
+  /* margin: 0 auto; */
+  width: 26vw;
+  height: 26vw;
+  /* border: 1px solid #000; */
+  border: 1px solid gray;
+  background: #fff;
+  /* padding: 10px 0; */
+}
+
+.contents-btn:hover {
+  color: #fff;
+  background: gray;
+  /* background: black; */
+}

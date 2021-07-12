@@ -9,7 +9,7 @@
   visibility: hidden;
 }
 
-#count-down {
+#count-time {
   visibility: hidden;
   font-size: 8rem;
   color: goldenrod;
@@ -134,7 +134,7 @@
   margin-right: 1rem;
 } */
 
-.sound-btn-on {
+#sound-on {
   width: 10vw;
   width: 24vw;
   color: #fff;
@@ -144,7 +144,7 @@
   padding: 10px 0;
 }
 
-.sound-btn-off {
+#sound-off {
   width: 10vw;
   width: 24vw;
   border: 1px solid #000;

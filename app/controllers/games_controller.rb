@@ -1,8 +1,6 @@
 class GamesController < ApplicationController
 
   def index
-    # @path = request.fullpath
-    # binding.pry
   end
 
   def new
