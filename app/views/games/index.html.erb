@@ -53,7 +53,9 @@
   <%# <p>お試しプレイがお済みの方はこちらもどうぞ</p> %>
   <p>◆こちらもオススメです◆</p>
   <div class="contents">
-    <button class="contents-btn contents-1">ポケモン(No.1~No.151)</button>
+    <%= link_to new_game_path(genre: "pokemon") do %>
+      <button class="contents-btn contents-1">ポケモン(No.1~No.151)</button>
+    <% end %>
     <button class="contents-btn contents-2">準備中</button>
   </div>
   <div class="contents">
