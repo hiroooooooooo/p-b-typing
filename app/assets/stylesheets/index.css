@@ -1,21 +1,51 @@
-.main-index {
-  width: 70vw;
+body {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+/* ヘッダー部分 */
+header {
+  width: 52vw;
+  margin: 0 auto;
+  background: dimgray;
+  font-size: 5rem;
+  box-sizing: border-box;
+  padding: 1rem 0 1rem 2rem;
+  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
+}
+
+header span {
+  color: goldenrod;
+}
+
+.title {
+  text-decoration: none;
+  color: white;
+}
+
+.title:hover {
+  opacity: 0.6;
+}
+
+/* メイン部分 */
+/* ヘッダー部分とフッター部分を引いた、残りのエリアを表示 */
+main {
+  flex: 1;
+  width: 52vw;
   margin: 0 auto;
   text-align: center;
+  position: relative;
 }
 
-.message {
-  /* width: 50vw; */
-  display: inline-block;
+.greeting {
   font-size: 3rem;
-  margin: 6rem 0 4rem 0;
+  margin-top: 7rem;
+  margin-bottom: 5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid;
-}
-
-.wrap {
-  display: grid;
-  place-items: center;
+  /* ボーダーの長さを要素の長さに合わせる */
+  display: inline-block;
 }
 
 .description {
@@ -23,86 +53,80 @@
   margin-bottom: 1rem;
 }
 
-.list {
-  list-style-type: square;
-  font-size: 1.4rem;
-  width: 35rem;
-  padding-left: 8rem;
-  margin-bottom: 3rem;
-}
-
-.list-item {
+.description-items {
+  width: 30rem;
+  margin: 0 auto;
   text-align: left;
-  padding-bottom: 0.5rem;
+  font-size: 1.4rem;
 }
 
 .account {
-  width: 50vw;
-  margin: 0 auto;
   display: flex;
-  justify-content: space-evenly;
+  margin-top: 3rem;
 }
 
-.btn-new {
-  width: 24vw;
-  border: 1px solid #000;
+.account-btn {
+  width: 26vw;
+  border: 1px solid dimgray;
   background: #fff;
+  box-sizing: border-box;
   padding: 10px 0;
 }
 
-.btn-new:hover {
+.account-btn:hover {
   color: #fff;
-  background: gray;
+  background: dimgray;
 }
 
-.btn-log {
-  width: 24vw;
-  border: 1px solid #000;
-  background: #fff;
-  padding: 10px 0;
-}
-
-.btn-log:hover {
-  color: #fff;
-  background: gray;
-}
-
-.text-dozo {
+.trial-text {
   font-size: 1.4rem;
-  margin: 4rem 0 2rem 0;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
 }
 
-.btn-otameshi {
-  width: 24.5vw;
+.trial-btn {
+  width: 26vw;
   border: 2px solid goldenrod;
   background: #fff;
   padding: 10px 0;
+  margin-bottom: 6rem;
 }
 
-.btn-otameshi:hover {
+.trial-btn:hover {
   color: #fff;
   background: goldenrod;
 }
 
+.contents-text {
+  font-size: 1.4rem;
+  background: dimgray;
+  color: white;
+}
+
 .contents {
-  width: 52vw;
-  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
 }
 
 .contents-btn {
-  /* margin: 0 auto; */
   width: 26vw;
   height: 26vw;
-  /* border: 1px solid #000; */
-  border: 1px solid gray;
+  border: 1px solid dimgray;
   background: #fff;
-  /* padding: 10px 0; */
 }
 
 .contents-btn:hover {
   color: #fff;
-  background: gray;
-  /* background: black; */
+  background: dimgray;
+}
+
+/* フッター部分 */
+footer {
+  width: 52vw;
+  margin: 0 auto;
+  text-align: center;
+  background: dimgray;
+}
+
+.cr {
+  color: white;
 }

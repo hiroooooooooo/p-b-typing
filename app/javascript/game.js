@@ -9,24 +9,24 @@ const game = () => {
     const replay = document.getElementById('replay');
     const sound = document.getElementById('sound');
     const countTime = document.getElementById('count-time');
-    // 効果音
     const p = document.getElementById('p');
     const b = document.getElementById('b');
-    // 効果音のオンオフ
     const soundOn = document.getElementById('sound-on');
     const soundOff = document.getElementById('sound-off');
     const genre = document.getElementById("genre").textContent
-    console.log("genre="+genre);
+    console.log("genre = "+genre);
     let hiragana = document.getElementById("hiragana");
+    let countStart = true;
+    let soundSwitch = true;
+    let genreKana = [];
+    let genreTarget = [];
     // 関数内で使用
     let checkTexts = [];
     // お試しプレイの配列用
     let num = 0;
-    // カントダウンのオンオフ用
-    let countOn = true;
-    let soundSwitch = true;
 
-    const otameshiKana = [
+    // お試しプレイ
+    const trialKana = [
       'こんにちは',
       'はじめまして',
       'ピービータイピングといいます',
@@ -38,8 +38,7 @@ const game = () => {
       'おぼえていきましょう',
       'おためしプレイありがとう'
     ];
-
-    const otameshiTarget = [
+    const trialTarget = [
       'KONNNITIWA',
       'HAJIMEMASITE',
       'PI-BI-TAIPINNGUTOIIMASU',
@@ -120,7 +119,7 @@ const game = () => {
       "MYUU"
     ];
     
-    // カウントダウン
+    // カウントダウン関数
     function countDown(){
       let time = 2; 
       ready.style.visibility ="hidden";
@@ -136,8 +135,8 @@ const game = () => {
         }},1000);
     }
 
-    // お試しプレイ用
-    function createTextOtameshi() {
+    // お試しプレイ用関数
+    function trialCreateText() {
       if ( num === 10 ) {
         start.style.visibility = "hidden";
         sound.style.visibility = "hidden";
@@ -145,9 +144,9 @@ const game = () => {
         replay.style.visibility = "visible";
         return;
       }
-      hiragana.textContent = otameshiKana[num];
+      hiragana.textContent = trialKana[num];
       target.textContent = '';
-      checkTexts = otameshiTarget[num].split('').map(function(value) {
+      checkTexts = trialTarget[num].split('').map(function(value) {
         let span = document.createElement('span');
         span.textContent = value;
         target.appendChild(span);
@@ -155,16 +154,6 @@ const game = () => {
       });
       num++;
     }
-    
-    let genreKana = [];
-    // genreKana = pokemonKana;
-    let genreTarget = [];
-    // genreTarget = pokemonTarget;
-    console.log(genreKana.length);
-    console.log(genreTarget.length);
-    // console.log(pokemonKana.length);
-    // console.log(pokemonTarget.length);
-
 
     // コンテンツ用関数
     function createText() {
@@ -193,16 +182,16 @@ const game = () => {
       num++;
     }
 
-    // コンテンツ用
+    // キーダウン関数
     function keyDown(e) {
       e.preventDefault();
       if ( e.key === "Escape") {
         location.href = "/"
       }
       if ( e.key === " " ) {
-        if (countOn) {
+        if (countStart) {
           countDown();
-          countOn = false;
+          countStart = false;
         }
       }
       // 小文字でも正解にする
@@ -220,103 +209,51 @@ const game = () => {
         }
         checkTexts[0].className = 'add-color';
         checkTexts.shift();
-        // if(!checkTexts.length) createText();
         if(!checkTexts.length) {
-          if ( genre === "otameshi" || genre === "" ) {
-            createTextOtameshi();
+          if ( genre === "trial" || genre === "" ) {
+            trialCreateText();
           } else {
             createText();
           }
         }
-        // ここまでテスト
       }
     }
 
-    // サウンドオン
+    // サウンドオン関数
     function soundStart() {
       soundSwitch = true;
       soundOn.blur();
       soundOn.style.color = "white";
-      soundOn.style.background = "gray";
+      soundOn.style.background = "dimgray";
       soundOff.style.color = "black";
       soundOff.style.background = "white";
     }
 
-    // サウンドオフ
+    // サウンドオフ関数
     function soundStop() {
       soundSwitch = false;
       soundOff.blur();
       soundOff.style.color = "white";
-      soundOff.style.background = "gray";
+      soundOff.style.background = "dimgray";
       soundOn.style.color = "black";
       soundOn.style.background = "white";
     }
 
-    // お試しプレイ
-    if ( genre === "otameshi" || genre === "" ) {
-      createTextOtameshi();
+    // ここがスタート
+    if ( genre === "trial" || genre === "" ) {
+      trialCreateText();
       document.addEventListener('keydown', keyDown);
-
-      // document.addEventListener('keydown', (e) => {
-      //   e.preventDefault();
-      //   if ( e.key === "Escape") {
-      //     location.href = "/"
-      //   }
-      //   if ( e.key === " " ) {
-      //     if (countOn) {
-      //       countDown();
-      //       countOn = false;
-      //     }
-      //   }
-      //   let komoji = checkTexts[0].textContent.toLowerCase();
-      //   if(e.key === checkTexts[0].textContent || e.key === komoji) {
-      //     if (soundSwitch) {
-      //       if (e.key === "p" || e.key === "P") {
-      //         p.currentTime = 0;
-      //         p.play();
-      //       }
-      //       if (e.key === "b" || e.key === "B") {
-      //         b.currentTime = 0;
-      //         b.play();
-      //       }
-      //     }
-      //     checkTexts[0].className = 'add-color';
-      //     checkTexts.shift();
-      //     if(!checkTexts.length) createTextOtameshi();
-      //   }
-      // });
-
       soundOn.addEventListener('click', soundStart);
       soundOff.addEventListener('click', soundStop);
-      // soundOn.addEventListener('click', () => {
-      //   soundSwitch = true;
-      //   soundOn.blur();
-      //   soundOn.style.color = "white";
-      //   soundOn.style.background = "gray";
-      //   soundOff.style.color = "black";
-      //   soundOff.style.background = "white";
-      // });
-      // soundOff.addEventListener('click', () => {
-      //   soundSwitch = false;
-      //   soundOff.blur();
-      //   soundOff.style.color = "white";
-      //   soundOff.style.background = "gray";
-      //   soundOn.style.color = "black";
-      //   soundOn.style.background = "white";
-      // });
     } else if (genre === "pokemon") {
-      console.log("pokemon内");
       genreKana = pokemonKana;
       genreTarget = pokemonTarget;
-      console.log(genreKana.length);
-    console.log(genreTarget.length);
       createText();
       document.addEventListener('keydown', keyDown);
       soundOn.addEventListener('click', soundStart);
       soundOff.addEventListener('click', soundStop);
     }
 
-    
   }
 }
 window.addEventListener("load", game);
