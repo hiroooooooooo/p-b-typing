@@ -1,46 +1,40 @@
 <%= render "header" %>
 
-<%# audio_tag("p0.mp3", id:"p") %>
 <%= audio_tag("p0.mp3", id:"p") %>
 <%= audio_tag("b0.mp3", id:"b") %>
-<%# audio_tag("b0", id:"b") %>
-<%# <audio src="p0.mp3" id="p"></audio> %>
-<%# <audio src="b0.mp3" id="b"></audio> %>
 
-<main class="main-new">
+<main>
 
   <p id="genre"><%= @genre %></p>
+  <p id="count-time">3</p>
 
-  <p class="count-time" id="count-time">3</p>
-
-  <div class="text-ready" id="ready">
-    <p class="text-ready1">日本語入力モードをオフにしてください</p>
-    <p class="text-ready2">スペースキーで開始</p>
-    <p class="text-ready3">（終了はescキーです）</p>
+  <div id="ready">
+    <p>日本語入力モードをオフにしてください</p>
+    <p class="ready-text">スペースキーで開始</p>
+    <p>（終了はescキーです）</p>
   </div>
 
-  <div class="text-start" id="start">
+  <div id="start">
     <p class="text-hiragana" id="hiragana">ひらがな文がここに表示される</p>
     <p id="target"></p>
   </div>
 
-  <div class="text-result" id="result">
-    <p class="text-result1">おつかれさまでした！</p>
-    <p class="text-result2">よくがんばりましたね♪</p>
-    <p class="text-result3">もう1度プレイしますか？</p>
+  <div id="result">
+    <p class="result-text1">おつかれさまでした！</p>
+    <p class="result-text2">よくがんばりましたね♪</p>
+    <p class="result-text3">もう1度プレイしますか？</p>
   </div>
 
-  <div class="replay" id="replay">
+  <div id="replay">
     <%= link_to new_game_path(genre: @genre) do %>
-      <button class="replay-btn-y">はい</button>
+      <button class="replay-btn">はい</button>
     <% end %>
     <%= link_to root_path do %>
-      <button class="replay-btn-n">いいえ</button>
+      <button class="replay-btn">いいえ</button>
     <% end %>
   </div>
 
   <div class="sound" id="sound">
-    <%# <span class="text-sound">効果音</span> %>
     <button class="sound-btn-on" id="sound-on">♪オン</button>
     <button class="sound-btn-off" id="sound-off">♪オフ</button>
   </div>

@@ -1,10 +1,3 @@
-.main-new {
-  text-align: center;
-  width: 70vw;
-  margin: 0 auto;
-  position: relative;
-}
-
 #genre {
   visibility: hidden;
 }
@@ -17,140 +10,115 @@
   top: 25%;
   left: 50%;
   transform: translate(-50%, 0);
+  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
 }
 
-.text-ready {
-  width: 50vw;
-  /* visibility: visible; */
-  /* margin-top: 10rem; */
+#ready {
+  width: 52vw;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 1.4rem;
+}
+
+.ready-text {
+  font-size: 2.4rem;
+  color: goldenrod;
+  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
+}
+
+#start {
+  visibility: hidden;
+  width: 52vw;
   position: absolute;
   top: 25%;
   left: 50%;
   transform: translate(-50%, 0);
 }
-.text-ready1 {
-  font-size: 1.4rem;
+
+#hiragana {
+  font-size: 2rem;
+  opacity: 0.6;
+  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
 }
 
-.text-ready2 {
-  font-size: 2.4rem;
+#target {
+  font-size: 2.7rem;
+  opacity: 0.6;
+  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
+}
+
+.add-color {
   color: goldenrod;
 }
 
-.text-ready3 {
-  font-size: 1.4rem;
-}
-
-.text-start {
+#result {
   visibility: hidden;
-  width: 50vw;
+  width: 52vw;
   position: absolute;
   top: 25%;
   left: 50%;
   transform: translate(-50%, 0);
 }
 
-.text-hiragana {
-  font-size: 2rem;
-  /* color: gray; */
-  /* color: #636363; */
-}
-
-.text-result {
-  visibility: hidden;
-  width: 50vw;
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, 0);
-}
-
-.text-result1 {
+.result-text1 {
   font-size: 2rem;
 }
 
-.text-result2 {
+.result-text2 {
   font-size: 2.4rem;
-  /* color: goldenrod; */
+  color: goldenrod;
+  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
 }
 
-.text-result3 {
+.result-text3 {
   font-size: 1.4rem;
   margin-top: 3rem;
 }
 
-.replay {
+#replay {
   visibility: hidden;
-  width: 50vw;
+  width: 52vw;
   display: flex;
-  justify-content: space-evenly;
   position: absolute;
   top: 70%;
   left: 50%;
   transform: translate(-50%, 0);
 }
 
-.replay-btn-y {
-  width: 24vw;
-  /* border: 1px solid #000; */
-  border: 2px solid goldenrod;
+.replay-btn {
+  width: 26vw;
+  border: 1px solid dimgray;
   background: white;
-  /* margin-right: 0.5rem; */
   padding: 10px 0;
 }
 
-.replay-btn-y:hover {
+.replay-btn:hover {
   color: #fff;
-  /* background: gray; */
-  background: goldenrod;
+  background: dimgray;
 }
 
-.replay-btn-n {
-  width: 24vw;
-  border: 1px solid #000;
-  background: white;
-  /* margin-left: 0.5rem; */
-  padding: 10px 0;
-}
-
-.replay-btn-n:hover {
-  color: #fff;
-  background: gray;
-}
-
-.sound {
-  width: 50vw;
+#sound {
+  width: 52vw;
   display: flex;
-  /* align-items: center; */
-  justify-content: space-evenly;
   position: absolute;
   top: 70%;
   left: 50%;
   transform: translate(-50%, 0);
 }
-
-/* .text-sound {
-  font-size: 1.4rem;
-  margin-right: 1rem;
-} */
 
 #sound-on {
-  width: 10vw;
-  width: 24vw;
+  width: 26vw;
   color: #fff;
-  border: 1px solid #000;
-  background: gray;
-  /* margin-right: 0.6rem; */
+  border: 1px solid dimgray;
+  background: dimgray;
   padding: 10px 0;
 }
 
 #sound-off {
-  width: 10vw;
-  width: 24vw;
-  border: 1px solid #000;
+  width: 26vw;
+  border: 1px solid dimgray;
   background: #fff;
-  /* margin-right: 5.2rem; */
-  /* margin-left: 0.6rem; */
   padding: 10px 0;
 }
-

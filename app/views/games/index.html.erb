@@ -1,57 +1,42 @@
 <%= render "header" %>
 
-
-
-<main class="main-index">
+<main>
 
   <% if current_user.present? %>
-    <p class="message"><%= "#{current_user.name}さん、こんにちは！" %></p>
+    <p class="greeting"><%= "#{current_user.name}さん、こんにちは！" %></p>
   <% else %>
-    <p class="message"><%= "ピービータイピングへようこそ！" %></p>
+    <p class="greeting"><%= "ピービータイピングへようこそ！" %></p>
   <% end %>
 
-  <div class="wrap">
-    <h2 class="description">このアプリについて</h2>
-    <ul class="list">
-      <li class="list-item">タイピングの練習が手軽に行えます</li>
-      <li class="list-item">名前とパスワードだけで新規登録できます</li>
-      <%# <li class="list-item">どのお題も10問出題します</li> %>
-      <li class="list-item">当サイトはすべて無料でご利用いただけます</li>
-      <%# <li class="list-item">まずはお試しプレイをどうぞ</li> %>
-    </ul>
+  <h2 class="description">このアプリについて</h2>
+  <div class="description-items">
+    <p>・タイピングの練習が手軽に行えます</p>
+    <p>・名前とパスワードだけで会員登録できます</p>
+    <p>・当サイトはすべて無料でご利用いただけます</p>
   </div>
 
   <div class="account">
     <%= link_to new_user_registration_path do %>
-      <button class="btn-new">新規登録</button>
+      <button class="account-btn">会員登録</button>
     <% end %>
 
     <% if current_user.present? %>
       <%= link_to destroy_user_session_path, method: :delete do %>
-        <button class="btn-log">ログアウト</button>
+        <button class="account-btn">ログアウト</button>
       <% end %>
     <% else %>
       <%= link_to new_user_session_path do %>
-        <button class="btn-log">ログイン</button>
+        <button class="account-btn">ログイン</button>
       <% end %>
     <% end %>
   </div>
-
-  <p class="text-dozo">まずはこちらをどうぞ</p>
-
-  <p>注意点</p>
-  <p>「し」は「SI」、「ち」は「TI」、「つ」は「TU」、「ふ」は「HU」、「ん」は「常にN2回」、「じ」は「ZI」、「しゃしゅしょ」は「sya, syu, syo」、「ちゃちゅちょ」は「tya, tyu, tyo」、「じゃじゅじょ」は「JA, JU, JO」</p>
-
-  <%# <div id="otameshi"> %>
-  <%#= link_to new_game_path do %>
-  <%= link_to new_game_path(genre: "otameshi") do %>
-  <%#= link_to(new_game_path, {id: "otameshi"}) do %>
-    <button class="btn-otameshi">お試しプレイ</button>
+  
+  <p class="trial-text">まずはこちらをどうぞ</p>
+  <%= link_to new_game_path(genre: "trial") do %>
+    <button class="trial-btn">お試しプレイ</button>
   <% end %>
-  <%# </div> %>
 
-  <%# <p>お試しプレイがお済みの方はこちらもどうぞ</p> %>
-  <p>◆こちらもオススメです◆</p>
+  <p class="contents-text">タイピングジャンル</p>
   <div class="contents">
     <%= link_to new_game_path(genre: "pokemon") do %>
       <button class="contents-btn contents-1">ポケモン(No.1~No.151)</button>
