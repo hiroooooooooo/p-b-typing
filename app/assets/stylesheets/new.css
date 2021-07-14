@@ -13,6 +13,10 @@
   font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
 }
 
+#user-name {
+  visibility: hidden;
+}
+
 #ready {
   width: 52vw;
   position: absolute;

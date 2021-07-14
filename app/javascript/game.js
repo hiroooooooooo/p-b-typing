@@ -1,4 +1,4 @@
-const game = () => {
+const startApp = () => {
   // ページを限定する
   if (document.getElementById('target')) {
 
@@ -14,7 +14,13 @@ const game = () => {
     const soundOn = document.getElementById('sound-on');
     const soundOff = document.getElementById('sound-off');
     const genre = document.getElementById("genre").textContent
-    console.log("genre = "+genre);
+    console.log("genre="+genre);
+    // const userName = document.getElementById("user-name").textContent
+    const userName = document.getElementById("user-name")
+    // let userName = document.getElementById("user-name")
+    // if (!userName) userName=""
+    // console.log("userName="+userName);
+    // console.log("userName="+userName.textContent);
     let hiragana = document.getElementById("hiragana");
     let countStart = true;
     let soundSwitch = true;
@@ -22,8 +28,10 @@ const game = () => {
     let genreTarget = [];
     // 関数内で使用
     let checkTexts = [];
-    // お試しプレイの配列用
+    // お試しプレイ回数
     let num = 0;
+    // 入力文字数
+    let charNum = 0;
 
     // お試しプレイ
     const trialKana = [
@@ -121,6 +129,7 @@ const game = () => {
     
     // カウントダウン関数
     function countDown(){
+      countTime.textContent = 3;
       let time = 2; 
       ready.style.visibility ="hidden";
       countTime.style.visibility = "visible";
@@ -135,13 +144,72 @@ const game = () => {
         }},1000);
     }
 
+    // サウンドオン関数
+    function startSound() {
+      soundSwitch = true;
+      soundOn.blur();
+      soundOn.style.color = "white";
+      soundOn.style.background = "dimgray";
+      soundOff.style.color = "black";
+      soundOff.style.background = "white";
+    }
+
+    // サウンドオフ関数
+    function stopSound() {
+      soundSwitch = false;
+      soundOff.blur();
+      soundOff.style.color = "white";
+      soundOff.style.background = "dimgray";
+      soundOn.style.color = "black";
+      soundOn.style.background = "white";
+    }
+
+    // データ保存関数
+    function saveData() {
+      console.log("saveData内");
+      const XHR = new XMLHttpRequest();
+      XHR.open("POST", "/games", true);
+      // これがないとデータを正しく受信できない
+      XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+      XHR.responseType = "json";
+
+      XHR.send(`point=${charNum}`);
+      
+      XHR.onload = () => {
+        if (XHR.readyState === 4 && XHR.status === 200) {
+          console.log("処理");
+          const point = document.getElementById("point");
+          const level = document.getElementById("level");
+          // point.insertAdjacentHTML("afterend", buildHTML(XHR));
+          // level.insertAdjacentHTML("afterend", buildHTML(XHR));
+        } else {
+          alert(`Error ${XHR.status}: ${XHR.statusText}`);
+          return null;
+        };
+      };
+    }
+
     // お試しプレイ用関数
-    function trialCreateText() {
-      if ( num === 10 ) {
+    function createTrialText() {
+      charNum += target.textContent.length;
+      console.log(charNum);
+
+
+
+      // 一時的に1に変更、後で10に！
+      if ( num === 1 ) {
+      // if ( num === 10 ) {
         start.style.visibility = "hidden";
         sound.style.visibility = "hidden";
         result.style.visibility = "visible";
         replay.style.visibility = "visible";
+
+        // 実装中ここから
+        if (userName) {
+          saveData();
+        }
+        // 実装中ここまで
+
         return;
       }
       hiragana.textContent = trialKana[num];
@@ -157,18 +225,26 @@ const game = () => {
 
     // コンテンツ用関数
     function createText() {
+      charNum += target.textContent.length;
+      console.log(charNum);
       if ( num === 10 ) {
         start.style.visibility = "hidden";
         sound.style.visibility = "hidden";
         result.style.visibility = "visible";
         replay.style.visibility = "visible";
+
+        // 実装中ここから
+        // if (userName) {
+        //   saveData();
+        // }
+        // 実装中ここまで
+
         return;
       }
       const rnd = Math.floor(Math.random() * genreKana.length);
       // const rnd = Math.floor(Math.random() * (`${genre}Kana`).length);
       // hiragana.textContent = pokemonKana[rnd];
       hiragana.textContent = genreKana[rnd];
-
       // 前の文字列が残ってしまうので空文字を入れてリセット
       target.textContent = '';
       // checkTexts = pokemonTarget[rnd].split('').map(function(value) {
@@ -211,7 +287,7 @@ const game = () => {
         checkTexts.shift();
         if(!checkTexts.length) {
           if ( genre === "trial" || genre === "" ) {
-            trialCreateText();
+            createTrialText();
           } else {
             createText();
           }
@@ -219,41 +295,21 @@ const game = () => {
       }
     }
 
-    // サウンドオン関数
-    function soundStart() {
-      soundSwitch = true;
-      soundOn.blur();
-      soundOn.style.color = "white";
-      soundOn.style.background = "dimgray";
-      soundOff.style.color = "black";
-      soundOff.style.background = "white";
-    }
-
-    // サウンドオフ関数
-    function soundStop() {
-      soundSwitch = false;
-      soundOff.blur();
-      soundOff.style.color = "white";
-      soundOff.style.background = "dimgray";
-      soundOn.style.color = "black";
-      soundOn.style.background = "white";
-    }
-
     // ここがスタート
     if ( genre === "trial" || genre === "" ) {
-      trialCreateText();
+      createTrialText();
       document.addEventListener('keydown', keyDown);
-      soundOn.addEventListener('click', soundStart);
-      soundOff.addEventListener('click', soundStop);
+      soundOn.addEventListener('click', startSound);
+      soundOff.addEventListener('click', stopSound);
     } else if (genre === "pokemon") {
       genreKana = pokemonKana;
       genreTarget = pokemonTarget;
       createText();
       document.addEventListener('keydown', keyDown);
-      soundOn.addEventListener('click', soundStart);
-      soundOff.addEventListener('click', soundStop);
+      soundOn.addEventListener('click', startSound);
+      soundOff.addEventListener('click', stopSound);
     }
 
   }
 }
-window.addEventListener("load", game);
+window.addEventListener("load", startApp);
