@@ -13,9 +13,9 @@
 ActiveRecord::Schema.define(version: 2021_07_13_043537) do
 
   create_table "games", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "level", default: 0
-    t.integer "point"
-    t.integer "count"
+    t.integer "level", default: 1
+    t.integer "point", default: 0
+    t.integer "count", default: 0
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

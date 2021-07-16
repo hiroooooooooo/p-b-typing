@@ -7,10 +7,6 @@
 
   <p id="genre"><%= @genre %></p>
   <p id="count-time"></p>
-  <%# この実装あり？ %>
-  <% if user_signed_in? %>
-    <p id="user-name"><%= current_user.name %></p>
-  <%end%>
 
   <div id="ready">
     <p>日本語入力モードをオフにしてください</p>
@@ -26,9 +22,9 @@
   <div id="result">
     <p class="result-text1">おつかれさまでした！</p>
     <p class="result-text2">よくがんばりましたね♪</p>
-    <p class="result-text-point"><span id="point"><span><span>P</span>ゲット！!</p>
-    <p class="result-text-level">現在のレベルは<span id="level">0</span>です</p>
-    <p class="result-text">会員登録するとレベル機能が追加されます</p>
+    <p id="point"></p>
+    <p id="level"></p>
+    <p class="result-text">ログインするとレベル機能が解放されます</p>
     <p class="result-text3">もう1度プレイしますか？</p>
   </div>
 
