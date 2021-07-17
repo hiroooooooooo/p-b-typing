@@ -28,7 +28,6 @@ class GamesController < ApplicationController
 
   private
 
-  # 使わないかも
   def game_params
     params.permit(:level, :point, :count)
   end

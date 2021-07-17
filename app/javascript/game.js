@@ -5,7 +5,7 @@ const startApp = () => {
     const target = document.getElementById('target');
     const ready = document.getElementById("ready");
     const start = document.getElementById("start");
-    const result = document.getElementById("result");
+    const finish = document.getElementById("finish");
     const replay = document.getElementById('replay');
     const sound = document.getElementById('sound');
     const countTime = document.getElementById('count-time');
@@ -15,8 +15,9 @@ const startApp = () => {
     const soundOff = document.getElementById('sound-off');
     const genre = document.getElementById("genre").textContent
     console.log("genre="+genre);
+    const finishInfo = document.getElementById("finish-info");
     let hiragana = document.getElementById("hiragana");
-    let countStart = true;
+    let countState = true;
     let soundSwitch = true;
     let genreKana = [];
     let genreTarget = [];
@@ -28,6 +29,7 @@ const startApp = () => {
     let charNum = 0;
     let gameData = null;
     let levelUp = false;
+    let gameStart = false;
 
     // お試しプレイ
     const trialKana = [
@@ -129,12 +131,12 @@ const startApp = () => {
       let time = 2; 
       ready.style.visibility ="hidden";
       countTime.style.visibility = "visible";
-      let countStart = setInterval(function(){
+      let countState = setInterval(function(){
         countTime.innerHTML = time;
         time--;
         // console.log(time);
         if(time < 0){
-          clearInterval(countStart);
+          clearInterval(countState);
           countTime.style.visibility = "hidden";
           start.style.visibility = "visible";
         }},1000);
@@ -160,16 +162,35 @@ const startApp = () => {
       soundOn.style.background = "white";
     }
 
-    // XHRで使う関数その1←おそらくレベルアップした時用も作成
-    const buildHTML = (XHR) => {
+    // XHRで使う関数その1
+    const buildHTMLLevelKeep = (XHR) => {
       gameData = XHR.response.game;
       console.log(gameData);
       const html = `
-        <div class="game">
-          <div class="game-point">
-            ${charNum}Pゲット！
+        <div class="game-data">
+          <div class="game-data-point">
+            ${charNum}<span>P</span>ゲット！次のレベルアップまで残り${200 - gameData.point}<span>P</span>
           </div>
-          <div class="game-level">
+          <div class="game-data-level">
+            現在のレベルは${gameData.level}です
+          </div>
+        </div>`;
+      return html;
+    };
+
+    // XHRで使う関数その2
+    const buildHTMLLevelUp = (XHR) => {
+      gameData = XHR.response.game;
+      console.log(gameData);
+      const html = `
+        <div class="game-data">
+          <div class="game-data-levelup">
+            ★レベルアップおめでとうございます★
+          </div>
+          <div class="game-data-point">
+            ${charNum}Pゲット！次のレベルアップまで残り${200 - gameData.point}P
+          </div>
+          <div class="game-data-level">
             現在のレベルは${gameData.level}です
           </div>
         </div>`;
@@ -178,34 +199,30 @@ const startApp = () => {
 
     // データ保存関数
     function saveData() {
-      console.log("saveData()");
       const XHR = new XMLHttpRequest();
       XHR.open("PATCH", `/games/${gameData.id}`, true);
       // これがないとデータを正しく受信できない
       XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
       XHR.responseType = "json";
 
-
       let level = gameData.level;
       let point = gameData.point + charNum;
-      if (point >= 11) {
+      if (point >= 200) {
         level += 1;
         levelUp = true;
-        point -= 11;
+        point -= 200;
       }
       let count = gameData.count + charNum;
-      console.log(`レベル${level}、ポイント${point}、カウント${count}`);
       XHR.send(`level=${level}&point=${point}&count=${count}`);
-      
 
       XHR.onload = () => {
         if (XHR.readyState === 4 && XHR.status === 200) {
-          console.log("処理");
-          const point = document.getElementById("point");
-          const level = document.getElementById("level");
-          // if (levelUp)これで分岐
-          point.insertAdjacentHTML("beforebegin", buildHTML(XHR));
-          // level.insertAdjacentHTML("afterend", buildHTML(XHR));
+          const finishResult = document.getElementById("finish-result");
+          if (levelUp) {
+            finishResult.insertAdjacentHTML("beforebegin", buildHTMLLevelUp(XHR));
+          } else {
+            finishResult.insertAdjacentHTML("beforebegin", buildHTMLLevelKeep(XHR));
+          }
         } else {
           alert(`Error ${XHR.status}: ${XHR.statusText}`);
           return null;
@@ -216,22 +233,17 @@ const startApp = () => {
     // お試しプレイ用、入力文作成関数
     function createTrialText() {
       charNum += target.textContent.length;
-
-      // 一時的に1に変更、後で10に！
-      if ( num === 1 ) {
-      // if ( num === 10 ) {
+      // if ( num === 1 ) {
+      if ( num === 10 ) {
+        gameStart = false;
         start.style.visibility = "hidden";
         sound.style.visibility = "hidden";
-        result.style.visibility = "visible";
+        finish.style.visibility = "visible";
         replay.style.visibility = "visible";
-
-        // 実装中ここから
         if (gameData) {
-          console.log("通過テスト");
           saveData();
+          finishInfo.style.visibility = "hidden"
         }
-        // 実装中ここまで
-
         return;
       }
       hiragana.textContent = trialKana[num];
@@ -249,17 +261,15 @@ const startApp = () => {
     function createText() {
       charNum += target.textContent.length;
       if ( num === 10 ) {
+        gameStart = false;
         start.style.visibility = "hidden";
         sound.style.visibility = "hidden";
-        result.style.visibility = "visible";
+        finish.style.visibility = "visible";
         replay.style.visibility = "visible";
-
-        // 実装中ここから
-        // if (gameData) {
-        //   saveData();
-        // }
-        // 実装中ここまで
-
+        if (gameData) {
+          saveData();
+          finishInfo.style.visibility = "hidden"
+        }
         return;
       }
       const rnd = Math.floor(Math.random() * genreKana.length);
@@ -276,38 +286,41 @@ const startApp = () => {
       num++;
     }
 
-    // 入力関数
+    // キーダウン関数
     function keyDown(e) {
       e.preventDefault();
       if ( e.key === "Escape") {
         location.href = "/"
       }
       if ( e.key === " " ) {
-        if (countStart) {
+        if (countState) {
           countDown();
-          countStart = false;
+          countState = false;
+          gameStart = true;
         }
       }
-      // 小文字でも正解にする
-      let komoji = checkTexts[0].textContent.toLowerCase();
-      if(e.key === checkTexts[0].textContent || e.key === komoji) {
-        if (soundSwitch) {
-          if (e.key === "p" || e.key === "P") {
-            p.currentTime = 0;
-            p.play();
+      if (gameStart) {
+        // 小文字でも正解にする
+        let komoji = checkTexts[0].textContent.toLowerCase();
+        if(e.key === checkTexts[0].textContent || e.key === komoji) {
+          if (soundSwitch) {
+            if (e.key === "p" || e.key === "P") {
+              p.currentTime = 0;
+              p.play();
+            }
+            if (e.key === "b" || e.key === "B") {
+              b.currentTime = 0;
+              b.play();
+            }
           }
-          if (e.key === "b" || e.key === "B") {
-            b.currentTime = 0;
-            b.play();
-          }
-        }
-        checkTexts[0].className = 'add-color';
-        checkTexts.shift();
-        if(!checkTexts.length) {
-          if ( genre === "trial" || genre === "" ) {
-            createTrialText();
-          } else {
-            createText();
+          checkTexts[0].className = 'add-color';
+          checkTexts.shift();
+          if(!checkTexts.length) {
+            if ( genre === "trial" || genre === "" ) {
+              createTrialText();
+            } else {
+              createText();
+            }
           }
         }
       }

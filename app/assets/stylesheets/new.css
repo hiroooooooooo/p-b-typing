@@ -3,18 +3,12 @@
 }
 
 #count-time {
-  visibility: hidden;
   font-size: 8rem;
   color: goldenrod;
   position: absolute;
   top: 25%;
   left: 50%;
   transform: translate(-50%, 0);
-  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
-}
-
-#user-name {
-  visibility: hidden;
 }
 
 #ready {
@@ -26,10 +20,17 @@
   font-size: 1.4rem;
 }
 
-.ready-text {
+.ready-text1 {
+  opacity: 0.6;
+}
+
+.ready-text2 {
   font-size: 2.4rem;
   color: goldenrod;
-  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
+}
+
+.ready-text3 {
+  opacity: 0.6;
 }
 
 #start {
@@ -44,20 +45,18 @@
 #hiragana {
   font-size: 2rem;
   opacity: 0.6;
-  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
 }
 
 #target {
   font-size: 2.7rem;
   opacity: 0.6;
-  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
 }
 
 .add-color {
   color: goldenrod;
 }
 
-#result {
+#finish {
   visibility: hidden;
   width: 52vw;
   position: absolute;
@@ -66,19 +65,32 @@
   transform: translate(-50%, 0);
 }
 
-.result-text1 {
+.finish-text1 {
   font-size: 2rem;
+  opacity: 0.6;
 }
 
-.result-text2 {
+.finish-text2 {
   font-size: 2.4rem;
   color: goldenrod;
-  font-family: "Hiragino Sans", "ヒラギノ角ゴ Pro W4", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
 }
 
-.result-text3 {
+#finish-info {
+  font-size: 1.6rem;
+  opacity: 0.6;
+  margin-top: 1rem;
+}
+
+.finish-text3 {
   font-size: 1.4rem;
+  opacity: 0.6;
   margin-top: 3rem;
+}
+
+.game-data {
+  font-size: 1.6rem;
+  opacity: 0.6;
+  margin-top: 1rem;
 }
 
 #replay {
