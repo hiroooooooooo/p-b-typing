@@ -1,11 +1,11 @@
-const game = () => {
+const startApp = () => {
   // ページを限定する
   if (document.getElementById('target')) {
 
     const target = document.getElementById('target');
     const ready = document.getElementById("ready");
     const start = document.getElementById("start");
-    const result = document.getElementById("result");
+    const finish = document.getElementById("finish");
     const replay = document.getElementById('replay');
     const sound = document.getElementById('sound');
     const countTime = document.getElementById('count-time');
@@ -14,16 +14,22 @@ const game = () => {
     const soundOn = document.getElementById('sound-on');
     const soundOff = document.getElementById('sound-off');
     const genre = document.getElementById("genre").textContent
-    console.log("genre = "+genre);
+    console.log("genre="+genre);
+    const finishInfo = document.getElementById("finish-info");
     let hiragana = document.getElementById("hiragana");
-    let countStart = true;
+    let countState = true;
     let soundSwitch = true;
     let genreKana = [];
     let genreTarget = [];
     // 関数内で使用
     let checkTexts = [];
-    // お試しプレイの配列用
+    // カウント用
     let num = 0;
+    // 入力文字数
+    let charNum = 0;
+    let gameData = null;
+    let levelUp = false;
+    let gameStart = false;
 
     // お試しプレイ
     const trialKana = [
@@ -121,27 +127,123 @@ const game = () => {
     
     // カウントダウン関数
     function countDown(){
+      countTime.textContent = 3;
       let time = 2; 
       ready.style.visibility ="hidden";
       countTime.style.visibility = "visible";
-      let countStart = setInterval(function(){
+      let countState = setInterval(function(){
         countTime.innerHTML = time;
         time--;
         // console.log(time);
         if(time < 0){
-          clearInterval(countStart);
+          clearInterval(countState);
           countTime.style.visibility = "hidden";
           start.style.visibility = "visible";
         }},1000);
     }
 
-    // お試しプレイ用関数
-    function trialCreateText() {
+    // 効果音オン関数
+    function startSound() {
+      soundSwitch = true;
+      soundOn.blur();
+      soundOn.style.color = "white";
+      soundOn.style.background = "dimgray";
+      soundOff.style.color = "black";
+      soundOff.style.background = "white";
+    }
+
+    // 効果音オフ関数
+    function stopSound() {
+      soundSwitch = false;
+      soundOff.blur();
+      soundOff.style.color = "white";
+      soundOff.style.background = "dimgray";
+      soundOn.style.color = "black";
+      soundOn.style.background = "white";
+    }
+
+    // XHRで使う関数その1
+    const buildHTMLLevelKeep = (XHR) => {
+      gameData = XHR.response.game;
+      console.log(gameData);
+      const html = `
+        <div class="game-data">
+          <div class="game-data-point">
+            ${charNum}<span>P</span>ゲット！次のレベルアップまで残り${200 - gameData.point}<span>P</span>
+          </div>
+          <div class="game-data-level">
+            現在のレベルは${gameData.level}です
+          </div>
+        </div>`;
+      return html;
+    };
+
+    // XHRで使う関数その2
+    const buildHTMLLevelUp = (XHR) => {
+      gameData = XHR.response.game;
+      console.log(gameData);
+      const html = `
+        <div class="game-data">
+          <div class="game-data-levelup">
+            ★レベルアップおめでとうございます★
+          </div>
+          <div class="game-data-point">
+            ${charNum}Pゲット！次のレベルアップまで残り${200 - gameData.point}P
+          </div>
+          <div class="game-data-level">
+            現在のレベルは${gameData.level}です
+          </div>
+        </div>`;
+      return html;
+    };
+
+    // データ保存関数
+    function saveData() {
+      const XHR = new XMLHttpRequest();
+      XHR.open("PATCH", `/games/${gameData.id}`, true);
+      // これがないとデータを正しく受信できない
+      XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+      XHR.responseType = "json";
+
+      let level = gameData.level;
+      let point = gameData.point + charNum;
+      if (point >= 200) {
+        level += 1;
+        levelUp = true;
+        point -= 200;
+      }
+      let count = gameData.count + charNum;
+      XHR.send(`level=${level}&point=${point}&count=${count}`);
+
+      XHR.onload = () => {
+        if (XHR.readyState === 4 && XHR.status === 200) {
+          const finishResult = document.getElementById("finish-result");
+          if (levelUp) {
+            finishResult.insertAdjacentHTML("beforebegin", buildHTMLLevelUp(XHR));
+          } else {
+            finishResult.insertAdjacentHTML("beforebegin", buildHTMLLevelKeep(XHR));
+          }
+        } else {
+          alert(`Error ${XHR.status}: ${XHR.statusText}`);
+          return null;
+        };
+      };
+    }
+
+    // お試しプレイ用、入力文作成関数
+    function createTrialText() {
+      charNum += target.textContent.length;
+      // if ( num === 1 ) {
       if ( num === 10 ) {
+        gameStart = false;
         start.style.visibility = "hidden";
         sound.style.visibility = "hidden";
-        result.style.visibility = "visible";
+        finish.style.visibility = "visible";
         replay.style.visibility = "visible";
+        if (gameData) {
+          saveData();
+          finishInfo.style.visibility = "hidden"
+        }
         return;
       }
       hiragana.textContent = trialKana[num];
@@ -155,23 +257,25 @@ const game = () => {
       num++;
     }
 
-    // コンテンツ用関数
+    // コンテンツ用、入力文作成関数
     function createText() {
+      charNum += target.textContent.length;
       if ( num === 10 ) {
+        gameStart = false;
         start.style.visibility = "hidden";
         sound.style.visibility = "hidden";
-        result.style.visibility = "visible";
+        finish.style.visibility = "visible";
         replay.style.visibility = "visible";
+        if (gameData) {
+          saveData();
+          finishInfo.style.visibility = "hidden"
+        }
         return;
       }
       const rnd = Math.floor(Math.random() * genreKana.length);
-      // const rnd = Math.floor(Math.random() * (`${genre}Kana`).length);
-      // hiragana.textContent = pokemonKana[rnd];
       hiragana.textContent = genreKana[rnd];
-
       // 前の文字列が残ってしまうので空文字を入れてリセット
       target.textContent = '';
-      // checkTexts = pokemonTarget[rnd].split('').map(function(value) {
       checkTexts = genreTarget[rnd].split('').map(function(value) {
         let span = document.createElement('span');
         span.textContent = value;
@@ -189,71 +293,75 @@ const game = () => {
         location.href = "/"
       }
       if ( e.key === " " ) {
-        if (countStart) {
+        if (countState) {
           countDown();
-          countStart = false;
+          countState = false;
+          gameStart = true;
         }
       }
-      // 小文字でも正解にする
-      let komoji = checkTexts[0].textContent.toLowerCase();
-      if(e.key === checkTexts[0].textContent || e.key === komoji) {
-        if (soundSwitch) {
-          if (e.key === "p" || e.key === "P") {
-            p.currentTime = 0;
-            p.play();
+      if (gameStart) {
+        // 小文字でも正解にする
+        let komoji = checkTexts[0].textContent.toLowerCase();
+        if(e.key === checkTexts[0].textContent || e.key === komoji) {
+          if (soundSwitch) {
+            if (e.key === "p" || e.key === "P") {
+              p.currentTime = 0;
+              p.play();
+            }
+            if (e.key === "b" || e.key === "B") {
+              b.currentTime = 0;
+              b.play();
+            }
           }
-          if (e.key === "b" || e.key === "B") {
-            b.currentTime = 0;
-            b.play();
+          checkTexts[0].className = 'add-color';
+          checkTexts.shift();
+          if(!checkTexts.length) {
+            if ( genre === "trial" || genre === "" ) {
+              createTrialText();
+            } else {
+              createText();
+            }
           }
         }
-        checkTexts[0].className = 'add-color';
-        checkTexts.shift();
-        if(!checkTexts.length) {
-          if ( genre === "trial" || genre === "" ) {
-            trialCreateText();
+      }
+    }
+
+    // データ作成関数
+    function createGameData() {
+      const XHR = new XMLHttpRequest();
+      XHR.open("POST", "/games", true);
+      XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+      XHR.responseType = "json";
+      XHR.send();
+      XHR.onload = () => {
+        if (XHR.readyState === 4) {
+          if (XHR.status === 200 || XHR.status === 204) {
+            gameData = XHR.response.game;
+            console.log(gameData);
           } else {
-            createText();
+            alert(`Error ${XHR.status}: ${XHR.statusText}`);
+            return null;
           }
         }
       }
-    }
-
-    // サウンドオン関数
-    function soundStart() {
-      soundSwitch = true;
-      soundOn.blur();
-      soundOn.style.color = "white";
-      soundOn.style.background = "dimgray";
-      soundOff.style.color = "black";
-      soundOff.style.background = "white";
-    }
-
-    // サウンドオフ関数
-    function soundStop() {
-      soundSwitch = false;
-      soundOff.blur();
-      soundOff.style.color = "white";
-      soundOff.style.background = "dimgray";
-      soundOn.style.color = "black";
-      soundOn.style.background = "white";
     }
 
     // ここがスタート
+    createGameData();
     if ( genre === "trial" || genre === "" ) {
-      trialCreateText();
+      createTrialText();
       document.addEventListener('keydown', keyDown);
-      soundOn.addEventListener('click', soundStart);
-      soundOff.addEventListener('click', soundStop);
+      soundOn.addEventListener('click', startSound);
+      soundOff.addEventListener('click', stopSound);
     } else if (genre === "pokemon") {
       genreKana = pokemonKana;
       genreTarget = pokemonTarget;
       createText();
       document.addEventListener('keydown', keyDown);
-      soundOn.addEventListener('click', soundStart);
-      soundOff.addEventListener('click', soundStop);
+      soundOn.addEventListener('click', startSound);
+      soundOff.addEventListener('click', stopSound);
     }
 
   }
 }
-window.addEventListener("load", game);
+window.addEventListener("load", startApp);
