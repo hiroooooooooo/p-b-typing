@@ -27,6 +27,7 @@ const startApp = () => {
     // 入力文字数
     let charNum = 0;
     let gameData = null;
+    let levelUp = false;
 
     // お試しプレイ
     const trialKana = [
@@ -166,7 +167,7 @@ const startApp = () => {
       const html = `
         <div class="game">
           <div class="game-point">
-            ${gameData.point}Pゲット！
+            ${charNum}Pゲット！
           </div>
           <div class="game-level">
             現在のレベルは${gameData.level}です
@@ -179,19 +180,30 @@ const startApp = () => {
     function saveData() {
       console.log("saveData()");
       const XHR = new XMLHttpRequest();
-      XHR.open("PATCH", "/games", true);
-
+      XHR.open("PATCH", `/games/${gameData.id}`, true);
       // これがないとデータを正しく受信できない
       XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
       XHR.responseType = "json";
 
-      XHR.send(`point=${charNum}`);
+
+      let level = gameData.level;
+      let point = gameData.point + charNum;
+      if (point >= 11) {
+        level += 1;
+        levelUp = true;
+        point -= 11;
+      }
+      let count = gameData.count + charNum;
+      console.log(`レベル${level}、ポイント${point}、カウント${count}`);
+      XHR.send(`level=${level}&point=${point}&count=${count}`);
       
+
       XHR.onload = () => {
         if (XHR.readyState === 4 && XHR.status === 200) {
           console.log("処理");
           const point = document.getElementById("point");
           const level = document.getElementById("level");
+          // if (levelUp)これで分岐
           point.insertAdjacentHTML("beforebegin", buildHTML(XHR));
           // level.insertAdjacentHTML("afterend", buildHTML(XHR));
         } else {
@@ -214,9 +226,9 @@ const startApp = () => {
         replay.style.visibility = "visible";
 
         // 実装中ここから
-          if (gameData) {
-            console.log("通過テスト");
-          // saveData();
+        if (gameData) {
+          console.log("通過テスト");
+          saveData();
         }
         // 実装中ここまで
 

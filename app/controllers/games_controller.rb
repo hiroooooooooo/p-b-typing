@@ -19,11 +19,18 @@ class GamesController < ApplicationController
     render json:{game: game}
   end
 
+  def update
+    data = Game.find(params[:id])
+    data.update(game_params)
+    game = Game.find(params[:id])
+    render json:{game: game}
+  end
+
   private
 
   # 使わないかも
   def game_params
-    params.require(:game).permit(:level, :point, :count).merge(user_id: current_user.id)
+    params.permit(:level, :point, :count)
   end
 
 end
