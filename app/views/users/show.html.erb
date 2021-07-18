@@ -1,0 +1,29 @@
+<%= render "games/header" %>
+
+<main>
+  <h1 class="mypage-text"><%= @user.name %>さんのマイページ</h1>
+  <div class="status">
+    <div class="status-left">
+      <p>レベル</p>
+      <p>経験値</p>
+      <p>次のレベルまで</p>
+    </div>
+    <div class="status-right">
+      <p>：<span><%= @game.level %></span></p>
+      <p>：<%= @game.point %>P</p>
+      <p>：<%= 200 - @game.point %>P</p>
+    </div>
+  </div>
+  <h2 class="ranking-text">ランキング</h2>
+  <p class="ranking-myrank"><span>(levelカラムソートで検索)</span>位/(全レコード数)人中</p>
+  <%= link_to root_path do %>
+      <button class="back-btn">戻る</button>
+    <% end %>
+  <div class="password-change">
+    <%= link_to root_path do %>
+      パスワードの変更はこちら
+    <% end %>
+  </div>
+</main>
+
+<%= render "games/footer" %>

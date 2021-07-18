@@ -8,8 +8,6 @@ class User < ApplicationRecord
   # [memo]ベース部分を残す
   # with_options presence: true do
   #   validates :name, uniqueness: true
-  #   # [memo]パスワードに対して手動でバリデーションを追加してあげる
-  #   # [memo]数字のみの正規表現
   #   validates :password, format: { with: /\A\d+\z/ }
   # end
 

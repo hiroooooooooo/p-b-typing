@@ -16,8 +16,14 @@
   </div>
 
   <div class="account">
-    <%= link_to new_user_registration_path do %>
-      <button class="account-btn">会員登録</button>
+    <% if current_user.present? %>
+      <%= link_to user_path(current_user.id) do %>
+        <button class="account-btn">マイページ</button>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_registration_path do %>
+        <button class="account-btn">会員登録</button>
+      <% end %>
     <% end %>
 
     <% if current_user.present? %>

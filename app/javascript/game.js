@@ -1,4 +1,25 @@
 const startApp = () => {
+  // データ作成関数
+  function createGameData() {
+    const XHR = new XMLHttpRequest();
+    XHR.open("POST", "/games", true);
+    XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    XHR.responseType = "json";
+    XHR.send();
+    XHR.onload = () => {
+      if (XHR.readyState === 4) {
+        if (XHR.status === 200 || XHR.status === 204) {
+          gameData = XHR.response.game;
+          console.log(gameData);
+        } else {
+          alert(`Error ${XHR.status}: ${XHR.statusText}`);
+          return null;
+        }
+      }
+    }
+  }
+  createGameData();
+
   // ページを限定する
   if (document.getElementById('target')) {
 
@@ -326,28 +347,7 @@ const startApp = () => {
       }
     }
 
-    // データ作成関数
-    function createGameData() {
-      const XHR = new XMLHttpRequest();
-      XHR.open("POST", "/games", true);
-      XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-      XHR.responseType = "json";
-      XHR.send();
-      XHR.onload = () => {
-        if (XHR.readyState === 4) {
-          if (XHR.status === 200 || XHR.status === 204) {
-            gameData = XHR.response.game;
-            console.log(gameData);
-          } else {
-            alert(`Error ${XHR.status}: ${XHR.statusText}`);
-            return null;
-          }
-        }
-      }
-    }
-
     // ここがスタート
-    createGameData();
     if ( genre === "trial" || genre === "" ) {
       createTrialText();
       document.addEventListener('keydown', keyDown);
