@@ -1,24 +1,28 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## アプリ名
+P-B-TYPING
 
-Things you may want to cover:
+## 概要
+タイピングの練習を行える
 
-* Ruby version
+## 本番環境(デプロイ先　テストアカウント＆ID)
 
-* System dependencies
 
-* Configuration
+## 制作背景
+小中学生のプログラム必修に伴い、タイピング能力の向上に寄与することが目的
 
-* Database creation
+## DEMO
 
-* Database initialization
 
-* How to run the test suite
+## 工夫したポイント
+特定のキーを押したときに音が鳴るようにしたところ
 
-* Services (job queues, cache servers, search engines, etc.)
+## 使用技術(開発環境)
+HTML/CSS, Ruby(Ruby on Rails), JavaScript
 
-* Deployment instructions
+## 課題や今後実装したい機能
+パスワード変更機能
 
-* ...
+## DB設計
+[ER図](er.png)
