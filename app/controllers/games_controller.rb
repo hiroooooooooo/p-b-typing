@@ -10,20 +10,20 @@ class GamesController < ApplicationController
     if user_signed_in?
       @user = User.find(current_user.id)
       # userに紐づくgameモデルが無ければ
-      unless @user.game.present? 
-        game = Game.create(user_id: current_user.id)
-      else
-        game = Game.find(@user.game.id)
-      end
+      game = if @user.game.present?
+               Game.find(@user.game.id)
+             else
+               Game.create(user_id: current_user.id)
+             end
     end
-    render json:{game: game}
+    render json: { game: game }
   end
 
   def update
     data = Game.find(params[:id])
     data.update(game_params)
     game = Game.find(params[:id])
-    render json:{game: game}
+    render json: { game: game }
   end
 
   private
@@ -31,5 +31,4 @@ class GamesController < ApplicationController
   def game_params
     params.permit(:level, :point, :count)
   end
-
 end

@@ -4,17 +4,13 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @game = Game.find(@user.game.id)
-    if @user != current_user
-      redirect_to root_path
-    end 
-    @level_count = Game.select("level").count
-    @level_order = Game.select("level").order("level DESC")
-    # @level_last = Game.select("level").order("level DESC").last
-    # binding.pry
+    redirect_to root_path if @user != current_user
+    @level_count = Game.select('level').count
+    @level_order = Game.select('level').order('level DESC')
 
     i = 0
     @my_rank = 1
-    while i < @level_count do
+    while i < @level_count
       if @game.level == @level_order[i].level
         @my_rank += i
         break
@@ -23,5 +19,4 @@ class UsersController < ApplicationController
       end
     end
   end
-
 end

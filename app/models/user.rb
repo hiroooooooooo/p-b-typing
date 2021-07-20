@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
-        #  [memo]:validatableを削除
+  #  [memo]:validatableを削除
 
   # [memo]ベース部分を残す
   # with_options presence: true do
