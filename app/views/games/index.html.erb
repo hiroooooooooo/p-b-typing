@@ -11,13 +11,20 @@
   <h2 class="description">このアプリについて</h2>
   <div class="description-items">
     <p>・タイピングの練習が手軽に行えます</p>
-    <p>・名前とパスワードだけで会員登録できます</p>
+    <%# <p>・名前とパスワードだけで会員登録できます</p> %>
+    <p>・ログインすると各種機能が解放されます</p>
     <p>・当サイトはすべて無料でご利用いただけます</p>
   </div>
 
   <div class="account">
-    <%= link_to new_user_registration_path do %>
-      <button class="account-btn">会員登録</button>
+    <% if current_user.present? %>
+      <%= link_to user_path(current_user.id) do %>
+        <button class="account-btn">マイページ</button>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_registration_path do %>
+        <button class="account-btn">会員登録</button>
+      <% end %>
     <% end %>
 
     <% if current_user.present? %>

@@ -1,4 +1,26 @@
 const startApp = () => {
+  let gameData = null;
+  // データ作成関数
+  function createGameData() {
+    const XHR = new XMLHttpRequest();
+    XHR.open("POST", "/games", true);
+    XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    XHR.responseType = "json";
+    XHR.send();
+    XHR.onload = () => {
+      if (XHR.readyState === 4) {
+        if (XHR.status === 200 || XHR.status === 204) {
+          gameData = XHR.response.game;
+          console.log(gameData);
+        } else {
+          alert(`Error ${XHR.status}: ${XHR.statusText}`);
+          return null;
+        }
+      }
+    }
+  }
+  createGameData();
+
   // ページを限定する
   if (document.getElementById('target')) {
 
@@ -27,7 +49,6 @@ const startApp = () => {
     let num = 0;
     // 入力文字数
     let charNum = 0;
-    let gameData = null;
     let levelUp = false;
     let gameStart = false;
 
@@ -204,17 +225,19 @@ const startApp = () => {
       // これがないとデータを正しく受信できない
       XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
       XHR.responseType = "json";
-
       let level = gameData.level;
       let point = gameData.point + charNum;
+
+
       if (point >= 200) {
+      // if (point >= 20) {
         level += 1;
         levelUp = true;
         point -= 200;
+        // point -= 20;
       }
       let count = gameData.count + charNum;
       XHR.send(`level=${level}&point=${point}&count=${count}`);
-
       XHR.onload = () => {
         if (XHR.readyState === 4 && XHR.status === 200) {
           const finishResult = document.getElementById("finish-result");
@@ -233,8 +256,8 @@ const startApp = () => {
     // お試しプレイ用、入力文作成関数
     function createTrialText() {
       charNum += target.textContent.length;
-      // if ( num === 1 ) {
       if ( num === 10 ) {
+      // if ( num === 1 ) {
         gameStart = false;
         start.style.visibility = "hidden";
         sound.style.visibility = "hidden";
@@ -326,28 +349,7 @@ const startApp = () => {
       }
     }
 
-    // データ作成関数
-    function createGameData() {
-      const XHR = new XMLHttpRequest();
-      XHR.open("POST", "/games", true);
-      XHR.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-      XHR.responseType = "json";
-      XHR.send();
-      XHR.onload = () => {
-        if (XHR.readyState === 4) {
-          if (XHR.status === 200 || XHR.status === 204) {
-            gameData = XHR.response.game;
-            console.log(gameData);
-          } else {
-            alert(`Error ${XHR.status}: ${XHR.statusText}`);
-            return null;
-          }
-        }
-      }
-    }
-
     // ここがスタート
-    createGameData();
     if ( genre === "trial" || genre === "" ) {
       createTrialText();
       document.addEventListener('keydown', keyDown);

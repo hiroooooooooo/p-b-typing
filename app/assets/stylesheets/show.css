@@ -1,0 +1,69 @@
+.mypage-text {
+  font-size: 3rem;
+  opacity: 0.6;
+  margin-top: 4rem;
+}
+
+.status {
+  display: flex;
+  font-size: 1.6rem;
+  opacity: 0.6;
+  margin-top: 2rem;
+}
+
+.status-left {
+  width: 26vw;
+  text-align: right;
+}
+
+.status-right {
+  text-align: left;
+  font-weight: bold;
+}
+
+.status-right span {
+  color: goldenrod;
+  font-weight: bold;
+}
+
+.ranking-text {
+  font-size: 1.6rem;
+  color: white;
+  background: dimgray;
+  margin-top: 4rem;
+}
+
+.ranking-result {
+  font-size: 2rem;
+  opacity: 0.6;
+  margin-top: 2rem;
+}
+
+.ranking-result span {
+  color: goldenrod;
+  font-weight: bold;
+}
+
+.back-btn {
+  width: 26vw;
+  border: 1px solid dimgray;
+  background: #fff;
+  border: 2px solid goldenrod;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 10px 0;
+  margin-top: 4rem;
+}
+
+.back-btn:hover {
+  color: #fff;
+  background: dimgray;
+  color: #fff;
+  background: goldenrod;
+}
+
+.password-change {
+  margin-top: 3rem;
+  visibility: hidden;
+}
+
