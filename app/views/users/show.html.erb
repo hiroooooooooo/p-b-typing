@@ -7,15 +7,25 @@
       <p>レベル</p>
       <p>経験値</p>
       <p>次のレベルまで</p>
+      <p>入力文字数</p>
     </div>
     <div class="status-right">
       <p>：<span><%= @game.level %></span></p>
       <p>：<%= @game.point %>P</p>
       <p>：<%= 200 - @game.point %>P</p>
+      <p>：<%= @game.count %></p>
     </div>
   </div>
   <h2 class="ranking-text">ランキング</h2>
-  <p class="ranking-myrank"><span>(levelカラムソートで検索)</span>位/(全レコード数)人中</p>
+
+  <p class="ranking-result">
+    <% if @game.level == 1 %>
+      <span><%= @level_order.length %></span>位/<%= @level_count %>人中
+    <% else %>
+      <span><%= @my_rank %></span>位/<%= @level_count %>人中
+    <% end%>
+  </p>
+
   <%= link_to root_path do %>
       <button class="back-btn">戻る</button>
     <% end %>

@@ -33,14 +33,15 @@
   margin-top: 4rem;
 }
 
-.ranking-myrank {
+.ranking-result {
   font-size: 2rem;
   opacity: 0.6;
   margin-top: 2rem;
 }
 
-.ranking-myrank span {
-  
+.ranking-result span {
+  color: goldenrod;
+  font-weight: bold;
 }
 
 .back-btn {
@@ -63,5 +64,6 @@
 
 .password-change {
   margin-top: 3rem;
+  visibility: hidden;
 }
 

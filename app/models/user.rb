@@ -17,6 +17,11 @@ class User < ApplicationRecord
     # [memo]数字のみの正規表現
     validates :password, format: { with: /\A\d+\z/, message: 'は数字で入力してください' }
   end
+
+  # 確認用パスワードのバリデーション
+  validates :password, confirmation: true
+  validates :password_confirmation, presence: true
+
   has_one :game, dependent: :destroy
   # , class_name: 'Game'
 end
