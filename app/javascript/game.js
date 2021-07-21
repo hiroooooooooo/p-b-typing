@@ -1,5 +1,4 @@
 const startApp = () => {
-  console.log(soundSwitch)
   let gameData = null;
   // データ作成関数
   function createGameData() {
@@ -51,8 +50,7 @@ const startApp = () => {
     let charNum = 0;
     let levelUp = false;
     let gameStart = false;
-    let soundSwitch = true;
-
+    
     // お試しプレイ
     const trialKana = [
       'こんにちは',
@@ -166,7 +164,8 @@ const startApp = () => {
 
     // 効果音オン関数
     function startSound() {
-      soundSwitch = true;
+      sessionStorage.setItem("flag", "on");
+      flag = "on"
       soundOn.blur();
       soundOn.style.color = "white";
       soundOn.style.background = "dimgray";
@@ -176,7 +175,9 @@ const startApp = () => {
 
     // 効果音オフ関数
     function stopSound() {
-      soundSwitch = false;
+      // soundSwitch = false;
+      sessionStorage.setItem("flag", "off");
+      flag = "off"
       soundOff.blur();
       soundOff.style.color = "white";
       soundOff.style.background = "dimgray";
@@ -327,7 +328,8 @@ const startApp = () => {
         // 小文字でも正解にする
         let komoji = checkTexts[0].textContent.toLowerCase();
         if(e.key === checkTexts[0].textContent || e.key === komoji) {
-          if (soundSwitch) {
+          // if (soundSwitch) {
+          if (flag === "on") {
             if (e.key === "p" || e.key === "P") {
               p.currentTime = 0;
               p.play();
@@ -351,13 +353,12 @@ const startApp = () => {
     }
 
     // ここからスタート
-    // if (soundSwitch) {
-    //   console.log("ON");
-    //   startSound();
-    // } else {
-    //   console.log("OFF");
-    //   stopSound();
-    // }
+    let flag = sessionStorage.getItem("flag");
+    if (flag === null || flag === "on") {
+      startSound();
+    } else {
+      stopSound();
+    }
     if ( genre === "trial" || genre === "" ) {
       createTrialText();
       document.addEventListener('keydown', keyDown);
