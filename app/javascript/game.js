@@ -1,4 +1,5 @@
 const startApp = () => {
+  console.log(soundSwitch)
   let gameData = null;
   // データ作成関数
   function createGameData() {
@@ -40,7 +41,6 @@ const startApp = () => {
     const finishInfo = document.getElementById("finish-info");
     let hiragana = document.getElementById("hiragana");
     let countState = true;
-    let soundSwitch = true;
     let genreKana = [];
     let genreTarget = [];
     // 関数内で使用
@@ -51,6 +51,7 @@ const startApp = () => {
     let charNum = 0;
     let levelUp = false;
     let gameStart = false;
+    let soundSwitch = true;
 
     // お試しプレイ
     const trialKana = [
@@ -349,7 +350,14 @@ const startApp = () => {
       }
     }
 
-    // ここがスタート
+    // ここからスタート
+    // if (soundSwitch) {
+    //   console.log("ON");
+    //   startSound();
+    // } else {
+    //   console.log("OFF");
+    //   stopSound();
+    // }
     if ( genre === "trial" || genre === "" ) {
       createTrialText();
       document.addEventListener('keydown', keyDown);
