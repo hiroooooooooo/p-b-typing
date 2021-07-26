@@ -11,7 +11,6 @@ const startApp = () => {
       if (XHR.readyState === 4) {
         if (XHR.status === 200 || XHR.status === 204) {
           gameData = XHR.response.game;
-          console.log(gameData);
         } else {
           alert(`Error ${XHR.status}: ${XHR.statusText}`);
           return null;
@@ -188,7 +187,6 @@ const startApp = () => {
     // XHRで使う関数その1
     const buildHTMLLevelKeep = (XHR) => {
       gameData = XHR.response.game;
-      console.log(gameData);
       const html = `
         <div class="game-data">
           <div class="game-data-point">
@@ -204,7 +202,6 @@ const startApp = () => {
     // XHRで使う関数その2
     const buildHTMLLevelUp = (XHR) => {
       gameData = XHR.response.game;
-      console.log(gameData);
       const html = `
         <div class="game-data">
           <div class="game-data-levelup">
